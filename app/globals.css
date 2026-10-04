@@ -1,0 +1,334 @@
+@import "tailwindcss";
+
+/* Butter Motion tokens. Deep yellow and accent are never used as text on light
+   backgrounds (1.8:1 and 1.4:1); espresso text passes AA on every surface here. */
+@theme {
+  --color-canvas: #fffdf5;
+  --color-butter: #fff1b8;
+  --color-accent: #f5d76e;
+  --color-deep: #e8bc45;
+  --color-ink: #3d392f;
+  --color-ink-soft: #6a6354;
+  --color-card: #ffffff;
+  --color-peach: #f9e7db;
+  --color-line: #ede6cf;
+  --shadow-soft: 0 1px 2px rgb(61 57 47 / 0.06), 0 10px 28px -10px rgb(61 57 47 / 0.18);
+  --shadow-lift: 0 2px 4px rgb(61 57 47 / 0.06), 0 24px 48px -20px rgb(61 57 47 / 0.3);
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@theme inline {
+  --font-display: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+    scroll-behavior: smooth;
+    background: var(--color-canvas);
+  }
+  body {
+    background: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-ink);
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-ink);
+    outline-offset: 3px;
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+}
+
+@layer components {
+  .container-page {
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+  @media (min-width: 640px) {
+    .container-page {
+      padding-inline: 1.5rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .container-page {
+      padding-inline: 2rem;
+    }
+  }
+  .section {
+    padding-block: 5rem;
+    scroll-margin-top: 5rem;
+  }
+  @media (min-width: 768px) {
+    .section {
+      padding-block: 7rem;
+    }
+  }
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-ink-soft);
+  }
+  .eyebrow::before {
+    content: "";
+    width: 0.5rem;
+    height: 0.5rem;
+    flex: none;
+    border-radius: 999px;
+    background: var(--color-deep);
+  }
+  .card {
+    background: var(--color-card);
+    border: 1px solid var(--color-line);
+    border-radius: 22px;
+    box-shadow: var(--shadow-soft);
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    background: var(--color-canvas);
+    box-shadow: inset 0 0 0 1px var(--color-line);
+    padding: 0.3rem 0.75rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 3rem;
+    border-radius: 999px;
+    padding: 0.8rem 1.4rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: box-shadow 0.2s, background-color 0.2s;
+  }
+  .btn svg {
+    width: 1.05rem;
+    height: 1.05rem;
+    transition: translate 0.35s var(--ease-spring);
+  }
+  .btn:hover svg {
+    translate: 3px 0;
+  }
+  .btn-primary {
+    background: var(--color-accent);
+    color: var(--color-ink);
+    box-shadow: 0 10px 22px -10px rgb(232 188 69 / 0.9);
+  }
+  .btn-primary:hover {
+    box-shadow: 0 14px 28px -10px rgb(232 188 69 / 1);
+  }
+  .btn-ghost {
+    color: var(--color-ink);
+    box-shadow: inset 0 0 0 1.5px var(--color-ink);
+  }
+  .btn-ghost:hover {
+    background: var(--color-card);
+  }
+  .btn-dark {
+    background: var(--color-ink);
+    color: var(--color-canvas);
+  }
+  /* Highlighter stroke behind the hero name. */
+  .hl {
+    background-image: linear-gradient(transparent 60%, var(--color-accent) 60%, var(--color-accent) 90%, transparent 90%);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    padding-inline: 0.04em;
+  }
+}
+
+/* ---------- Motion (CSS side). Runs without JS; Motion handles springs, nav pill, reveals, tilt. ---------- */
+
+/* One-off entry loader. `data-loaded` (set by an inline script) skips it after the first page of a session. */
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  background: var(--color-canvas);
+  pointer-events: none;
+  animation: loader-wipe 0.38s 0.7s var(--ease-soft) forwards;
+}
+.loader span {
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 999px;
+  background: var(--color-accent);
+  animation: loader-bounce 0.17s ease-in-out 4 alternate both;
+}
+.loader span:nth-child(2) {
+  background: var(--color-deep);
+  animation-delay: 0.06s;
+}
+.loader span:nth-child(3) {
+  animation-delay: 0.12s;
+}
+html[data-loaded] .loader {
+  display: none;
+}
+@keyframes loader-bounce {
+  to {
+    translate: 0 -0.8rem;
+  }
+}
+@keyframes loader-wipe {
+  from {
+    clip-path: inset(0 0 0 0);
+  }
+  to {
+    clip-path: inset(0 0 100% 0);
+    visibility: hidden;
+  }
+}
+
+/* Hero stagger: content is in the HTML and animates in from CSS alone. */
+.rise {
+  --rise-base: 0.8s;
+  animation: rise 0.56s var(--ease-soft) both;
+  animation-delay: calc(var(--rise-base) + var(--i, 0) * 90ms);
+}
+.art-in {
+  animation: art-in 0.76s 0.9s var(--ease-soft) both;
+}
+.hl-in {
+  animation: hl-in 0.65s 1.3s var(--ease-soft) both;
+}
+html[data-loaded] .rise {
+  --rise-base: 0.05s;
+}
+html[data-loaded] .art-in {
+  animation-delay: 0.15s;
+}
+html[data-loaded] .hl-in {
+  animation-delay: 0.5s;
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    translate: 0 18px;
+  }
+}
+@keyframes art-in {
+  from {
+    opacity: 0;
+    scale: 0.92;
+  }
+}
+@keyframes hl-in {
+  from {
+    background-size: 0% 100%;
+  }
+}
+
+/* Ambient hero geometry. */
+.float {
+  animation: float 7s ease-in-out infinite;
+}
+.float-slow {
+  animation: float 9.5s ease-in-out infinite reverse;
+}
+.orbit {
+  animation: orbit 22s linear infinite;
+}
+@keyframes float {
+  50% {
+    translate: 0 -9px;
+  }
+}
+@keyframes orbit {
+  to {
+    rotate: 360deg;
+  }
+}
+
+/* Decorative skills band; the categorized grid below it carries the content. */
+.marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 34s linear infinite;
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+@keyframes marquee {
+  to {
+    translate: -50% 0;
+  }
+}
+
+/* Click spark on the primary CTA. */
+.spark {
+  position: absolute;
+  width: 12px;
+  height: 2.5px;
+  border-radius: 2px;
+  background: var(--color-deep);
+  transform-origin: 0 50%;
+  pointer-events: none;
+  animation: spark 0.48s var(--ease-soft) forwards;
+}
+@keyframes spark {
+  from {
+    transform: rotate(var(--a)) translateX(8px) scaleX(1);
+    opacity: 1;
+  }
+  to {
+    transform: rotate(var(--a)) translateX(30px) scaleX(0.2);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .loader,
+  .marquee {
+    display: none;
+  }
+  .rise,
+  .art-in,
+  .hl-in,
+  .float,
+  .float-slow,
+  .orbit {
+    animation: none;
+  }
+  .btn,
+  .btn svg {
+    transition: none;
+  }
+}
