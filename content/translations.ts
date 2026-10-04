@@ -126,7 +126,7 @@ const vi: Dict = {
   hero: {
     eyebrow: "Nguyễn Vi Phượng · Portfolio",
     greeting: "Xin chào, mình là",
-    name: "Vy Phượng.",
+    name: "Vy Phượng",
     lead: "Full-stack Developer xây dựng sản phẩm web thực tế — từ giao diện, API đến những luồng nghiệp vụ phức tạp.",
     viewWork: "Xem dự án",
     downloadCv: "Tải CV",
@@ -137,7 +137,7 @@ const vi: Dict = {
   about: {
     eyebrow: "Giới thiệu",
     title: "Từ giao diện đến luồng nghiệp vụ",
-    body: "Mình là Full-stack Developer với 2 năm làm web production, chủ yếu với TypeScript, React, Next.js, Node.js và PostgreSQL. Hiện mình xây dựng tính năng đặt chỗ và thương mại điện tử tại Protean Studios; trước đó làm frontend cho dự án khách hàng Nhật tại Tiah Vietnam. Mình học Kỹ thuật phần mềm tại Đại học Công nghiệp Hà Nội (HaUI).",
+    body: "Mình là Full-stack Developer với 2 năm làm web production, chủ yếu với TypeScript, React, Next.js, Node.js và PostgreSQL. Có kinh nghiệm phát triển hệ thống web booking, tích hợp API/dịch vụ bên thứ ba và xây dựng cơ chế xác thực, phân quyền. Có kinh nghiệm phát triển ứng dụng AI với RAG chatbot và ứng dụng AI coding agent vào quy trình phát triển phần mềm hằng ngày. Đã tham gia các dự án cho khách hàng Nhật Bản và làm việc theo quy trình Agile.",
     highlights: [
       { title: "Luồng đặt chỗ", body: "Storefront, partner dashboard và back-office theo quy tắc nghiệp vụ đặt chỗ." },
       { title: "Tích hợp & độ tin cậy", body: "GraphQL, tích hợp Reszaiko, JWT, webhook idempotent với Redis." },
@@ -264,7 +264,7 @@ const en: Dict = {
   hero: {
     eyebrow: "Nguyen Vi Phuong · Portfolio",
     greeting: "Hi, I'm",
-    name: "Vy Phuong.",
+    name: "Vy Phuong",
     lead: "A full-stack developer building production web experiences — from thoughtful interfaces and APIs to complex business workflows.",
     viewWork: "View work",
     downloadCv: "Download CV",

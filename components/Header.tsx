@@ -50,7 +50,7 @@ export function Header({ lang, t }: { lang: Lang; t: Dict["nav"] }) {
           href="#home"
           className="rounded-full border border-line bg-card/90 px-4 py-2 font-display text-lg font-extrabold tracking-[-0.03em] shadow-soft backdrop-blur"
         >
-          Vy Phuong<span className="text-deep">.</span>
+          Vy Phuong
         </a>
 
         <nav aria-label={t.label} className="hidden md:block">
