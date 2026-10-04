@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Script from "next/script";
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import { dictionaries, isLang, LANGS } from "@/content/translations";
 import "../globals.css";
@@ -46,7 +47,17 @@ export default async function RootLayout({ children, params }: { children: React
       <head>
         <script dangerouslySetInnerHTML={{ __html: loaderOncePerSession }} />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        {/* Chat assistant: rendered only when both env vars are set (Vercel → Environment Variables). */}
+        {process.env.NEXT_PUBLIC_HELPFLOW_WIDGET_URL && process.env.NEXT_PUBLIC_HELPFLOW_CHATBOT_ID && (
+          <Script
+            src={`${process.env.NEXT_PUBLIC_HELPFLOW_WIDGET_URL}/loader.js`}
+            data-chatbot-id={process.env.NEXT_PUBLIC_HELPFLOW_CHATBOT_ID}
+            strategy="lazyOnload"
+          />
+        )}
+      </body>
     </html>
   );
 }
